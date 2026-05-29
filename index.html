@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="A premium, minimalist music player crafted with quiet luxury aesthetics. Smooth animations, elegant controls, and a refined listening experience." />
+  <title>Aura — Music Player</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+
+  <!-- Ambient background orbs -->
+  <div class="bg-orb bg-orb--1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb--2" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb--3" aria-hidden="true"></div>
+
+  <main class="app" role="main">
+
+    <!-- ── SIDEBAR: Playlist ─────────────────────────── -->
+    <aside class="sidebar" id="sidebar" aria-label="Playlist">
+      <header class="sidebar__header">
+        <span class="sidebar__label">Queue</span>
+        <span class="sidebar__count" id="playlist-count">6 tracks</span>
+      </header>
+      <ul class="playlist" id="playlist" role="list" aria-label="Track list"></ul>
+    </aside>
+
+    <!-- ── MAIN PLAYER PANEL ─────────────────────────── -->
+    <section class="player" aria-label="Music Player">
+
+      <!-- Waveform visualizer -->
+      <div class="visualizer" id="visualizer" aria-hidden="true">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+
+      <!-- Album Art -->
+      <div class="album-wrapper">
+        <div class="album-art" id="album-art-container">
+          <img id="album-art" src="assets/images/album1.png" alt="Album artwork" draggable="false" />
+          <div class="album-art__overlay" aria-hidden="true"></div>
+          <div class="album-art__reflection" aria-hidden="true"></div>
+        </div>
+        <div class="album-shadow" aria-hidden="true"></div>
+      </div>
+
+      <!-- Track Info -->
+      <div class="track-info" aria-live="polite" aria-atomic="true">
+        <h1 class="track-title" id="track-title">Celestial Drift</h1>
+        <p class="track-artist" id="track-artist">Nova Collective</p>
+        <div class="track-meta">
+          <span class="track-badge" id="track-genre">Electronic</span>
+          <span class="track-index" id="track-index">1 / 6</span>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-section">
+        <div class="progress-bar" id="progress-bar" role="slider" aria-label="Track progress" aria-valuemin="0"
+          aria-valuemax="100" aria-valuenow="0" tabindex="0">
+          <div class="progress-bar__track">
+            <div class="progress-bar__fill" id="progress-fill"></div>
+            <div class="progress-bar__thumb" id="progress-thumb"></div>
+          </div>
+          <div class="progress-bar__buffer" id="progress-buffer"></div>
+        </div>
+        <div class="time-row">
+          <time class="time time--current" id="current-time">0:00</time>
+          <time class="time time--duration" id="total-duration">0:00</time>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls" role="group" aria-label="Playback controls">
+        <button class="ctrl-btn ctrl-btn--secondary" id="btn-shuffle" aria-label="Shuffle" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <polyline points="16 3 21 3 21 8"></polyline>
+            <line x1="4" y1="20" x2="21" y2="3"></line>
+            <polyline points="21 16 21 21 16 21"></polyline>
+            <line x1="15" y1="15" x2="21" y2="21"></line>
+          </svg>
+        </button>
+
+        <button class="ctrl-btn ctrl-btn--nav" id="btn-prev" aria-label="Previous track">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M19 20L9 12l10-8v16z" />
+            <rect x="5" y="4" width="2" height="16" rx="1" />
+          </svg>
+        </button>
+
+        <button class="ctrl-btn ctrl-btn--play" id="btn-play" aria-label="Play" aria-pressed="false">
+          <span class="play-icon" id="play-icon" aria-hidden="true">
+            <!-- Play -->
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            <!-- Pause -->
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+            </svg>
+          </span>
+        </button>
+
+        <button class="ctrl-btn ctrl-btn--nav" id="btn-next" aria-label="Next track">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M5 4l10 8-10 8V4z" />
+            <rect x="17" y="4" width="2" height="16" rx="1" />
+          </svg>
+        </button>
+
+        <button class="ctrl-btn ctrl-btn--secondary" id="btn-repeat" aria-label="Repeat" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <polyline points="17 1 21 5 17 9"></polyline>
+            <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+            <polyline points="7 23 3 19 7 15"></polyline>
+            <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Volume Control -->
+      <div class="volume-section">
+        <button class="volume-icon-btn" id="btn-mute" aria-label="Mute">
+          <svg class="vol-icon" id="vol-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+            <path class="vol-wave vol-wave--2"
+              d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+          </svg>
+        </button>
+        <div class="volume-slider-wrapper">
+          <div class="volume-track" id="volume-track" role="slider" aria-label="Volume" aria-valuemin="0"
+            aria-valuemax="100" aria-valuenow="80" tabindex="0">
+            <div class="volume-fill" id="volume-fill"></div>
+            <div class="volume-thumb" id="volume-thumb"></div>
+          </div>
+        </div>
+        <span class="volume-value" id="volume-value">80</span>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Hidden audio element -->
+  <audio id="audio-player" preload="metadata"></audio>
+
+  <script src="assets/js/script.js"></script>
+</body>
+
+</html>
